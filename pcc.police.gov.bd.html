@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Police Clearance Certificate - Printable</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    /* Minimal local styles so file looks okay if stylesheets are not copied */
+    body { font-family: "SolaimanLipi", Helvetica, Arial, sans-serif; background:#f5f5f5; padding:20px; }
+    #printID { max-width:920px; margin:0 auto; background:#fff; padding:18px; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,0.08); }
+    .print-btn {
+      position: fixed;
+      top: 16px;
+      right: 20px;
+      background:#0077cc;
+      color:#fff;
+      border:0;
+      padding:8px 12px;
+      font-size:13px;
+      border-radius:6px;
+      cursor:pointer;
+      z-index:99999;
+    }
+    .print-btn:hover { background:#005fa3; }
+    @media print {
+      .print-btn { display:none !important; }
+      body { background: #fff; }
+      #printID { box-shadow: none; border: none; max-width:100%; margin:0; padding:0; }
+      /* reduce margins for produced pages */
+      @page { size: A4 portrait; margin: 10mm; }
+    }
+  </style>
+</head>
+<body>
+
+<button class="print-btn" id="printBtn" aria-label="Print certificate">🖨 Print</button>
+
+<!-- Main printable content -->
+<div id="printID">
+  <!-- Paste your certificate / application HTML here.
+       For demonstration I kept a short excerpt. Replace with full certificate markup. -->
+  <div style="text-align:center; margin-bottom:12px;">
+    <div style="font-size:18px; font-weight:700;">GOVERNMENT OF THE PEOPLE'S REPUBLIC OF BANGLADESH</div>
+    <div style="font-size:16px; margin-top:6px;">Ramu Police Station — Coxs Bazar</div>
+    <div style="margin-top:12px;">Ref No. 1CWGAAM &nbsp;&nbsp; Dated: 07-NOV-2024</div>
+    <h2 style="margin-top:14px;">POLICE CLEARANCE CERTIFICATE</h2>
+  </div>
+
+  <p>
+    The character and antecedents of Mr. MOHAMMED Son of BADSHA MIA Road: WARD NO-09,
+    Village/ Area: KAMMER GHONA, P/O: KHURULIA, Post Code: 4730, P/S: Ramu, District: Coxs Bazar
+    holder of Bangladesh International Passport No. A16409749 Issued at DIP/DHAKA on 08-OCT-24
+    have been verified and there is no adverse information against him/her on record.
+  </p>
+
+  <p>
+    This certificate is issued in pursuance of Ministry of Home Affairs Memo No. Nirdesh-2/75-Pt.
+    2152-Bohi(1), dated the 19th May, 1977.
+  </p>
+
+  <div style="margin-top:36px;">
+    <div style="float:left; width:50%;">Superintendent of Police<br/>District Special Branch Coxs Bazar</div>
+    <div style="float:right; width:45%; text-align:right;">Seal. &nbsp;&nbsp; Officer-in-Charge<br/>Ramu Police Station</div>
+    <div style="clear:both"></div>
+  </div>
+
+  <p style="margin-top:26px; font-size:12px; color:#666;">
+    This is a digital copy of the unsigned certificate issued by Bangladesh Police Online Police Clearance Management System.
+    The printed original must contain seal and signature of the designated officials.
+  </p>
+</div>
+
+<script>
+(function() {
+  const printBtn = document.getElementById('printBtn');
+
+  function printElementById(id) {
+    const el = document.getElementById(id);
+    if (!el) { console.warn('print: element not found:', id); return; }
+
+    // Build print document
+    const printContents = el.innerHTML;
+    const printWindow = window.open('', '_blank', 'height=900,width=1000,scrollbars=yes');
+
+    if (!printWindow) {
+      alert('Popup blocked. Allow popups for this site to print.');
+      return;
+    }
+
+    printWindow.document.open();
+    printWindow.document.write('<!doctype html><html><head><meta charset="utf-8"><title>Print</title>');
+
+    // Copy all same-origin stylesheet links, so printing keeps the same styles.
+    // If your stylesheets are on another domain or blocked by CORS, you may need to inline styles instead.
+    document.querySelectorAll('link[rel="stylesheet"]').forEach(function(link) {
+      try {
+        printWindow.document.write(link.outerHTML);
+      } catch (e) {
+        // ignore copy failure
+      }
+    });
+
+    // Also, copy any style tags
+    document.querySelectorAll('style').forEach(function(s) {
+      printWindow.document.write('<style>' + s.innerHTML + '</style>');
+    });
+
+    // Add small print helper CSS
+    printWindow.document.write('<style>@media print{ .print-btn{display:none !important} @page{ size:A4 portrait; margin:10mm } }</style>');
+
+    printWindow.document.write('</head><body>');
+    printWindow.document.write(printContents);
+    printWindow.document.write('</body></html>');
+    printWindow.document.close();
+
+    // Wait until content loads then print
+    printWindow.onload = function() {
+      try {
+        printWindow.focus();
+        printWindow.print();
+        // Optionally close the print window after printing (comment out if you don't want auto-close)
+        // printWindow.close();
+      } catch (e) {
+        console.error('Printing failed', e);
+      }
+    };
+  }
+
+  printBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    printElementById('printID');
+  }, false);
+})();
+</script>
+
+</body>
+</html>
